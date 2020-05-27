@@ -2,10 +2,10 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 
 import HomePage from './pages/homepage/homepage.component';
-import Shop from './pages/shop/shop.component';
+import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.css';
 
@@ -21,12 +21,55 @@ class App extends React.Component {
   unsubscribeFromAuth=null;
 
   componentDidMount(){
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user=>{
-      this.setState({ currentUser: user });
-      
-      console.log(user)
+    //store data in our state to use it in our app
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth =>{
+        if(userAuth){
+          const userRef = await createUserProfileDocument(userAuth)
+          userRef.onSnapshot(snapShot=>{
+            this.setState({
+              currentUser:{
+                id:snapShot.id,
+                ...snapShot.data()
+              }
+            })
+          })
+        } else {
+          //user is signOut equal to currentUser: null
+          this.setState({currentUser:userAuth})
+        }
+
+      // if(userAuth) {
+      //   const userRef = await createUserProfileDocument (userAuth)
+
+      //   userRef.onSnapshot(snapShot => {
+      //     this.setState({   
+      //       currentUser: {
+      //         id: snapShot.id,
+      //         ...snapShot.data()
+      //       }
+      //     })
+      //   });
+      // }
+      //this.setState ({currentUser: userAuth})//without it signout will not work till page refresh
     })
   }
+  //db
+  // componentDidMount (){
+  //   this.unsubscribeFromAuth = auth.onAuthStateChanged( async user=>{
+  //     createUserProfileDocument(user)
+  //     console.log(user)
+  //   })
+  // }
+
+
+  //Auth
+  // componentDidMount(){
+  //   this.unsubscribeFromAuth = auth.onAuthStateChanged( user=>{
+  //     this.setState({ currentUser: user });
+      
+  //     console.log(user)
+  //   })
+  // }
 
   componentWillUnmount(){
     this.unsubscribeFromAuth();
@@ -39,7 +82,7 @@ class App extends React.Component {
         <Header currentUser={this.state.currentUser}/>
         <Switch>
           <Route exact path='/' component={HomePage} />
-          <Route  path='/shop' component={Shop} />
+          <Route  path='/shop' component={ShopPage} />
           <Route  path='/signin' component={SignInAndSignUpPage} />
         </Switch>
       </div>
