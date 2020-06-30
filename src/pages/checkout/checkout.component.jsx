@@ -6,6 +6,9 @@ import { cartItemsSelector, cartTotalSelector, cartItemsCountSelector } from '..
 
 import './checkout.styles.scss'
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
+
+
 
 
 const CheckoutPage = ({cartItems, total, itemCount}) => (
@@ -40,6 +43,13 @@ const CheckoutPage = ({cartItems, total, itemCount}) => (
         <span>TOTAL PRICE: ${total}</span>
       </div>
     </div>
+    <div className='test-warning'>
+      * Payment in test mode so please don't enter the real data for your credit card, to try the payment  use the following test credit card below:
+       <br />
+      Card# : 4242 4242 4242 4242 - Exp: 01/21 - CVC: 123
+      <br/><br/>
+    </div>
+    <StripeCheckoutButton price={total}/>
   </div>
 )
 
