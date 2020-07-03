@@ -44,7 +44,7 @@ const CheckoutPage = ({cartItems, total, itemCount}) => (
       </div>
     </div>
     <div className='test-warning'>
-      * Payment in test mode so please don't enter the real data for your credit card, to try the payment  use the following test credit card below:
+      * Payment in test mode so please don't enter the real data for your credit card, to try the payment use the following test credit card below:
        <br />
       Card# : 4242 4242 4242 4242 - Exp: 01/21 - CVC: 123
       <br/>
