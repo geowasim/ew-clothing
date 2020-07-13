@@ -1,0 +1,39 @@
+//in App.js
+
+// import { collectionsToArraySelector } from './redux/shop/shop.selector'
+// adding 
+
+//in componentDidMount after       setCurrentUser(userAuth)
+
+    addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items}) ))
+
+      //needs import addCollectionAndDocuments
+
+  // in mapStateToProps :
+
+  collectionsArray: collectionsToArraySelector
+    //for adding db for once in firestore ref db0001
+  
+  //passing collectionsArray as props to componentDidMount 
+    const { setCurrentUser, collectionsArray  } = this.props;
+
+
+
+
+//in firebase.utils.js
+//utils to store shop_data in db
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+  console.log('collectionRef', collectionRef)
+   // we will follow the same rules that we did with createUserProfileDocuments
+
+  const batch = firestore.batch()
+
+  objectsToAdd.forEach(obj => {
+  const newDocRef = collectionRef.doc()
+  batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit()
+}

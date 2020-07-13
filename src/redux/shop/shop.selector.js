@@ -9,9 +9,10 @@ export const collectionsShopSelector = createSelector(
 )
 
 //selectCollectionsForPreview ... Yiuha
+//remember the async data takes a time till been set in the state
 export const collectionsToArraySelector = createSelector(
   [collectionsShopSelector],
-  collections => Object.keys(collections).map(key=> collections[key])
+  collections => collections ? Object.keys(collections).map(key=> collections[key]) : []
 )
 
 export const collectionsToArrayValuesSelector = createSelector(
@@ -28,9 +29,8 @@ export const collectionsToArrayValuesSelector = createSelector(
 //for using /hats or jackets ... to update the state
 export const collectionSelector = collectionUrlParam => createSelector(
   [collectionsShopSelector],
-  collections => collections[collectionUrlParam]
+  collections => (collections? collections[collectionUrlParam] : null)
   )
-
 
 
 

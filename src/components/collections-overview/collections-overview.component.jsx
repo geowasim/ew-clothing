@@ -1,14 +1,15 @@
 import React from 'react'
-import CollectionPreview from '../collection-preview/collection-preview.component'
-
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+
+import CollectionPreview from '../collection-preview/collection-preview.component'
+
 import { collectionsToArraySelector } from '../../redux/shop/shop.selector'
 
-import './collection-overview.styles.scss'
+import './collections-overview.styles.scss'
 
-const CollectionOverview = ({ collections }) => {
-  console.log(collections)
+const CollectionsOverview = ({ collections }) => {
+  //console.log(collections)
   return (
     <div className='collection-overview'>
       {
@@ -23,7 +24,7 @@ const CollectionOverview = ({ collections }) => {
 const mapStateToProps = createStructuredSelector({
   collections: collectionsToArraySelector
 })
-export default connect(mapStateToProps)(CollectionOverview)
+export default connect(mapStateToProps)(CollectionsOverview)
 
 // using Object.values 
 //without creatting extra selector , we use the same selector: collectionsShopSelector
