@@ -14,6 +14,7 @@ import {
 
 const CollectionPage = ({ collection }) => {
   const { title, items } = collection;
+  console.log("collectionPage",collection)
   return (
     <CollectionPageContainer>
       <CollectionTitle>{title.toUpperCase()}</CollectionTitle>

@@ -32,7 +32,15 @@ export const collectionSelector = collectionUrlParam => createSelector(
   collections => (collections? collections[collectionUrlParam] : null)
   )
 
-
+  // after using redux-thunk we create a selctor (create for async actions)
+export const isCollectionFetchingSelector = createSelector(
+  [shopSelector],
+  shop => shop.isFetching
+  )
+export const isCollectionsLoadedSelector = createSelector(
+  [shopSelector],
+  shop => !!shop.collections
+)
 
 
 
